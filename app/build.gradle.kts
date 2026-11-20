@@ -13,7 +13,9 @@ android {
 
     defaultConfig {
         applicationId = "com.freepdf.manager"
-        minSdk = 24
+        // POI (CleanerUtil) and log4j use MethodHandle.invoke/invokeExact, which are
+        // not desugarable and require API 26 natively.
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
