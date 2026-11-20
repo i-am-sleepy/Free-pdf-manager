@@ -38,6 +38,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        // POI / log4j use MethodHandle.invoke (Java 8+); desugar so minSdk 24 works.
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -84,6 +86,9 @@ android {
 }
 
 dependencies {
+    // Core library desugaring: lets POI/log4j (MethodHandle.invoke) run on API < 26.
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
