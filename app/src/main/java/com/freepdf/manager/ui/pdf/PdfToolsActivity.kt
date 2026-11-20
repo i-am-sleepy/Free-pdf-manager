@@ -570,21 +570,21 @@ class PdfToolsActivity : AppCompatActivity() {
                     )
                 }
 
-                override fun onRender(
+                override fun onWrite(
                     pageRanges: Array<out PageRange>?,
-                    attrs: PrintAttributes,
+                    destination: android.os.ParcelFileDescriptor,
                     cancellationSignal: android.os.CancellationSignal?,
-                    callback: PrintDocumentAdapter.RenderResultCallback
+                    callback: PrintDocumentAdapter.WriteResultCallback
                 ) {
                     if (cancellationSignal?.isCanceled == true) {
-                        callback.onRenderCancelled()
+                        callback.onWriteCancelled()
                         return
                     }
                     try {
-                        doc.writeTo(android.os.ParcelFileDescriptor.AutoCloseOutputStream(callback.writePdfContentStream))
-                        callback.onRenderFinished(pageRanges)
+                        doc.writeTo(android.os.ParcelFileDescriptor.AutoCloseOutputStream(destination))
+                        callback.onWriteFinished(pageRanges)
                     } catch (e: Exception) {
-                        callback.onRenderFailed(null)
+                        callback.onWriteFailed(null)
                     } finally {
                         doc.close()
                     }
