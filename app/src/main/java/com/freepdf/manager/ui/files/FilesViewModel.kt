@@ -38,7 +38,7 @@ class FilesViewModel @Inject constructor(
 
     private val recentFlow = repository.observeRecent(50)
     private val favoritesFlow = repository.observeFavorites()
-    private val binFlow = repository.observeDeleted()
+    private val binFlow = repository.observeDeleted().stateIn(scope, SharingStarted.Eagerly, emptyList())
 
     private val combined = kotlinx.coroutines.flow.combine(
         recentFlow, favoritesFlow, binFlow

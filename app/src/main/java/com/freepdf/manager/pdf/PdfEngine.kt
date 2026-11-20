@@ -11,7 +11,7 @@ import com.tom_roush.pdfbox.pdmodel.encryption.StandardProtectionPolicy
 import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
 import com.tom_roush.pdfbox.pdmodel.graphics.image.JPEGFactory
 import com.tom_roush.pdfbox.pdmodel.graphics.image.PDImageXObject
-import com.tom_roush.pdfbox.pdmodel.interactive.documentnavigation.destination.PDPageDestination
+import com.tom_roush.pdfbox.pdmodel.interactive.documentnavigation.destination.PDPageXYZDestination
 import com.tom_roush.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline
 import com.tom_roush.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem
 import com.tom_roush.pdfbox.rendering.PDFRenderer
@@ -217,7 +217,7 @@ object PdfEngine {
     // ------------------------------------------------------------------
 
     /** Rotates the specified 1-based pages by [deg] (90/180/270), in place to [out]. */
-    fun rotatePages(src: File, out: File, pages: List<Int>, deg: Int) {
+    fun rotatePages(src: File, out: File, pages: List<Int>, deg: Int): File {
         PDDocument.load(src).use { doc ->
             for (p in pages) {
                 if (p in 1..doc.numberOfPages) {
@@ -227,16 +227,18 @@ object PdfEngine {
             }
             doc.save(out)
         }
+        return out
     }
 
     /** Removes the specified 1-based pages, saving the rest to [out]. */
-    fun deletePages(src: File, out: File, pages: Set<Int>) {
+    fun deletePages(src: File, out: File, pages: Set<Int>): File {
         PDDocument.load(src).use { doc ->
             pages.sortedDescending().forEach { p ->
                 if (p in 1..doc.numberOfPages) doc.removePage(p - 1)
             }
             doc.save(out)
         }
+        return out
     }
 
     // ------------------------------------------------------------------
@@ -247,7 +249,7 @@ object PdfEngine {
      * Compresses by re-rendering each page to a JPEG at [dpi] and rebuilding
      * the document. Effective for image-heavy PDFs.
      */
-    fun compress(src: File, out: File, dpi: Int, jpegQuality: Float) {
+    fun compress(src: File, out: File, dpi: Int, jpegQuality: Float): File {
         PDDocument.load(src).use { source ->
             PDDocument().use { target ->
                 val renderer = PDFRenderer(source)
@@ -266,6 +268,7 @@ object PdfEngine {
                 target.save(out)
             }
         }
+        return out
     }
 
     /** Renders a page to a bitmap at the given scale (1.0 = 72 dpi). */
@@ -277,19 +280,21 @@ object PdfEngine {
     // ------------------------------------------------------------------
 
     /** Encrypts [src] with a user password, saving to [out]. */
-    fun lock(src: File, out: File, password: String) {
+    fun lock(src: File, out: File, password: String): File {
         PDDocument.load(src).use { doc ->
             val perms = AccessPermission()
             doc.protect(StandardProtectionPolicy(password, password, perms))
             doc.save(out)
         }
+        return out
     }
 
     /** Decrypts [src] with [password], saving an unprotected copy to [out]. */
-    fun unlock(src: File, out: File, password: String) {
+    fun unlock(src: File, out: File, password: String): File {
         PDDocument.load(src, password).use { doc ->
             doc.save(out)
         }
+        return out
     }
 
     /** True if the document is encrypted (or unreadable without a password). */
@@ -316,7 +321,7 @@ object PdfEngine {
         fontSize: Float,
         opacity: Float,
         position: String
-    ) {
+    ): File {
         // blend grey toward white to emulate opacity
         val g = (128 + (255 - 128) * (1 - opacity)).toInt().coerceIn(0, 255)
         PDDocument.load(src).use { doc ->
@@ -357,6 +362,7 @@ object PdfEngine {
             }
             doc.save(out)
         }
+        return out
     }
 
     /** Adds "n / total" page numbers at the given position. */
@@ -366,7 +372,7 @@ object PdfEngine {
         position: String,
         fontSize: Float,
         startNumber: Int
-    ) {
+    ): File {
         PDDocument.load(src).use { doc ->
             val total = doc.numberOfPages
             for (i in 0 until total) {
@@ -393,6 +399,7 @@ object PdfEngine {
             }
             doc.save(out)
         }
+        return out
     }
 
     // ------------------------------------------------------------------
@@ -407,7 +414,7 @@ object PdfEngine {
                 if (i < doc.numberOfPages) {
                     val item = PDOutlineItem()
                     item.title = titles[i]
-                    item.destination = PDPageDestination(doc.getPage(i))
+                    item.destination = PDPageXYZDestination(doc.getPage(i))
                     outline.addLast(item)
                 }
             }

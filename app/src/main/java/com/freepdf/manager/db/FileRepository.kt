@@ -33,6 +33,8 @@ class FileRepository @Inject constructor(
 
     fun observeRecent(limit: Int): Flow<List<FileEntity>> = dao.observeRecent(limit)
 
+    fun search(query: String): Flow<List<FileEntity>> = dao.search(query)
+
     /**
      * Registers (or re-registers) a file on disk in the database.
      * Returns the entity.

@@ -181,17 +181,17 @@ class BuilderActivity : AppCompatActivity() {
 
     private fun selectedPageSize(): String {
         val text = binding.spinnerPageSize.text?.toString().orEmpty()
-        return pageSizeSelection.firstOrNull { it.second == text } ?: pageSizeSelection.first()
+        return pageSizeSelection.firstOrNull { it.second == text }?.second ?: pageSizeSelection.first().second
     }
 
     private fun selectedMargin(): Float {
         val text = binding.spinnerMargin.text?.toString().orEmpty()
-        return marginSelection.firstOrNull { it.second == text } ?: marginSelection.first()
+        return marginSelection.firstOrNull { it.second == text }?.second?.toFloat() ?: marginSelection.first().second.toFloat()
     }
 
     private fun selectedOrientation(): Int {
         val text = binding.spinnerOrientation.text?.toString().orEmpty()
-        return orientationSelection.firstOrNull { it.second == text } ?: orientationSelection.first()
+        return orientationSelection.firstOrNull { it.second == text }?.second?.toInt() ?: orientationSelection.first().second.toInt()
     }
 
     // endregion

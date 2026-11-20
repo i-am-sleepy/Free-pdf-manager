@@ -10,6 +10,7 @@ import android.print.PrintDocumentAdapter
 import android.print.PrintDocumentInfo
 import android.print.PrintManager
 import android.util.Log
+import com.google.android.gms.tasks.ApiException
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -27,6 +28,7 @@ import com.freepdf.manager.pdf.PdfEngine
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.TextRecognizerOptions
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -451,7 +453,7 @@ class PdfToolsActivity : AppCompatActivity() {
 
     private fun initRecognizer() {
         if (textRecognizer == null) {
-            textRecognizer = TextRecognition.getClient()
+            textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
         }
     }
 
@@ -460,13 +462,13 @@ class PdfToolsActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val text = withContext(Dispatchers.IO) {
                 try {
-                    val recognizer = TextRecognition.getClient()
+                    val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
                     val sb = StringBuilder()
                     PDDocument.load(src).use { doc ->
                         for (i in 0 until doc.numberOfPages) {
                             val bmp = PdfEngine.renderPage(doc, i, 2.0f)
                             val image = InputImage.fromBitmap(bmp, 0)
-                            val t = recognizer.process(image).result
+                            val t = recognizer.process(image).getResult(ApiException::class.java)
                             if (t.isNotBlank()) {
                                 sb.append("Page ${i + 1}\n")
                                 sb.append(t).append("\n\n")
@@ -551,27 +553,26 @@ class PdfToolsActivity : AppCompatActivity() {
             val adapter = object : PrintDocumentAdapter() {
                 override fun onLayout(
                     oldAttributes: PrintAttributes?,
-                    oldPageRanges: PageRange?,
                     newAttributes: PrintAttributes,
-                    newPageRanges: PageRange?,
-                    cancelCallback: PrintDocumentAdapter.Cancellable,
-                    resultCallback: PrintDocumentAdapter.OnLayoutResultCallback
+                    cancellationSignal: android.os.CancellationSignal?,
+                    callback: PrintDocumentAdapter.LayoutResultCallback,
+                    extras: android.os.Bundle?
                 ) {
-                    resultCallback.onLayoutFinished(
+                    callback.onLayoutFinished(
                         PrintDocumentInfo.Builder(src.name)
                             .setPageCount(pageCount)
                             .build(), false)
                 }
 
                 override fun onRender(
-                    pages: Array<out String>,
+                    pageRanges: Array<out PageRange>?,
                     attrs: PrintAttributes,
-                    cancelCallback: PrintDocumentAdapter.Cancellable,
-                    resultCallback: PrintDocumentAdapter.OnRenderResultCallback
+                    cancellationSignal: android.os.CancellationSignal?,
+                    callback: PrintDocumentAdapter.RenderResultCallback
                 ) {
-                    doc.writeTo(android.os.ParcelFileDescriptor.AutoCloseOutputStream(resultCallback.writePdfContentStream))
+                    doc.writeTo(android.os.ParcelFileDescriptor.AutoCloseOutputStream(callback.writePdfContentStream))
                     doc.close()
-                    resultCallback.onRenderFinished(pages)
+                    callback.onRenderFinished(pageRanges)
                 }
             }
             val pm = getSystemService(PRINT_SERVICE) as PrintManager

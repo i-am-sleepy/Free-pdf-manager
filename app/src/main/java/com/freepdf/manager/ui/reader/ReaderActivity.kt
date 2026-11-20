@@ -119,7 +119,7 @@ class ReaderActivity : AppCompatActivity() {
                         pageCache.values.forEach { it.recycle() }
                         pageCache.clear()
                     }
-                    pageAdapter = PageAdapter(this)
+                    pageAdapter = PageAdapter(this@ReaderActivity)
                     pageAdapter?.setCount(pageCount)
                     binding.viewPager.adapter = pageAdapter
                     binding.viewPager.offscreenPageLimit = 1
