@@ -558,10 +558,16 @@ class PdfToolsActivity : AppCompatActivity() {
                     callback: PrintDocumentAdapter.LayoutResultCallback,
                     extras: android.os.Bundle?
                 ) {
+                    if (cancellationSignal?.isCanceled == true) {
+                        callback.onLayoutCancelled()
+                        return
+                    }
                     callback.onLayoutFinished(
                         PrintDocumentInfo.Builder(src.name)
                             .setPageCount(pageCount)
-                            .build(), false)
+                            .build(),
+                        true
+                    )
                 }
 
                 override fun onRender(
@@ -570,9 +576,18 @@ class PdfToolsActivity : AppCompatActivity() {
                     cancellationSignal: android.os.CancellationSignal?,
                     callback: PrintDocumentAdapter.RenderResultCallback
                 ) {
-                    doc.writeTo(android.os.ParcelFileDescriptor.AutoCloseOutputStream(callback.writePdfContentStream))
-                    doc.close()
-                    callback.onRenderFinished(pageRanges)
+                    if (cancellationSignal?.isCanceled == true) {
+                        callback.onRenderCancelled()
+                        return
+                    }
+                    try {
+                        doc.writeTo(android.os.ParcelFileDescriptor.AutoCloseOutputStream(callback.writePdfContentStream))
+                        callback.onRenderFinished(pageRanges)
+                    } catch (e: Exception) {
+                        callback.onRenderFailed(null)
+                    } finally {
+                        doc.close()
+                    }
                 }
             }
             val pm = getSystemService(PRINT_SERVICE) as PrintManager
