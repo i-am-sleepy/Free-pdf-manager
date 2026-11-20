@@ -175,9 +175,9 @@ class BuilderActivity : AppCompatActivity() {
         orientationSelection = orientations
     }
 
-    private var pageSizeSelection = listOf(Constants.PageSize.A4)
-    private var marginSelection = listOf(Constants.Margin.NONE)
-    private var orientationSelection = listOf(-1)
+    private var pageSizeSelection = listOf(Constants.PageSize.A4 to "A4")
+    private var marginSelection = listOf(Constants.Margin.NONE to "0")
+    private var orientationSelection = listOf(-1 to "Auto")
 
     private fun selectedPageSize(): String {
         val text = binding.spinnerPageSize.text?.toString().orEmpty()
@@ -326,7 +326,7 @@ class BuilderImageAdapter(
         val uri = uris[position]
         holder.binding.tvName.text = uri.lastPathSegment ?: "image"
         holder.binding.btnRemove.setOnClickListener {
-            removeAt(holder.bindingAdapterPosition)
+            removeAt(position)
         }
         holder.binding.thumb.post {
             try {

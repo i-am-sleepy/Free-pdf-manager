@@ -40,18 +40,20 @@ class FilesViewModel @Inject constructor(
     private val favoritesFlow = repository.observeFavorites()
     private val binFlow = repository.observeDeleted()
 
+    private val combined = kotlinx.coroutines.flow.combine(
+        recentFlow, favoritesFlow, binFlow
+    ) { r, f, b -> Triple(r, f, b) }
+
     /**
      * Active list, switching with the selected tab and updating live as
      * the underlying Room flows change.
      */
     val files: StateFlow<List<FileEntity>> =
-        kotlinx.coroutines.flow.combine(
-            listOf(_tab, recentFlow, favoritesFlow, binFlow)
-        ) { values ->
-            when (values[0]) {
-                TAB_FAVORITES -> values[2]
-                TAB_BIN -> values[3]
-                else -> values[1]
+        kotlinx.coroutines.flow.combine(_tab, combined) { tab, t ->
+            when (tab) {
+                TAB_FAVORITES -> t.second
+                TAB_BIN -> t.third
+                else -> t.first
             }
         }.stateIn(scope, SharingStarted.Eagerly, emptyList())
 
