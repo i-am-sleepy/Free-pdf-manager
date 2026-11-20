@@ -28,7 +28,7 @@ class DrawingView @JvmOverloads constructor(
         strokeJoin = Paint.Join.ROUND
     }
 
-    private val currentPath = Path()
+    private var currentPath = Path()
     private val strokes = mutableListOf<Path>()
     private val undoStack = mutableListOf<Pair<Path, Paint>>()
     private val redoStack = mutableListOf<Pair<Path, Paint>>()

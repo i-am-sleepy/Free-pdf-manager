@@ -145,7 +145,7 @@ class BuilderActivity : AppCompatActivity() {
         binding.spinnerPageSize.setText(
             sizes.first { it.first == Constants.PageSize.A4 }.second, false
         )
-        pageSizeSelection = sizes.map { it.first }
+        pageSizeSelection = sizes
 
         val margins = listOf(
             Constants.Margin.NONE to getString(R.string.margin_none),
@@ -159,7 +159,7 @@ class BuilderActivity : AppCompatActivity() {
         binding.spinnerMargin.setText(
             margins.first { it.first == Constants.Margin.NONE }.second, false
         )
-        marginSelection = margins.map { it.first }
+        marginSelection = margins
 
         val orientations = listOf(
             -1 to getString(R.string.orientation_auto),
@@ -172,21 +172,27 @@ class BuilderActivity : AppCompatActivity() {
         binding.spinnerOrientation.setText(
             orientations.first { it.first == -1 }.second, false
         )
-        orientationSelection = orientations.map { it.first }
+        orientationSelection = orientations
     }
 
     private var pageSizeSelection = listOf(Constants.PageSize.A4)
     private var marginSelection = listOf(Constants.Margin.NONE)
     private var orientationSelection = listOf(-1)
 
-    private fun selectedPageSize(): String =
-        pageSizeSelection[binding.spinnerPageSize.selectedItemPosition]
+    private fun selectedPageSize(): String {
+        val text = binding.spinnerPageSize.text?.toString().orEmpty()
+        return pageSizeSelection.firstOrNull { it.second == text } ?: pageSizeSelection.first()
+    }
 
-    private fun selectedMargin(): Float =
-        marginSelection[binding.spinnerMargin.selectedItemPosition]
+    private fun selectedMargin(): Float {
+        val text = binding.spinnerMargin.text?.toString().orEmpty()
+        return marginSelection.firstOrNull { it.second == text } ?: marginSelection.first()
+    }
 
-    private fun selectedOrientation(): Int =
-        orientationSelection[binding.spinnerOrientation.selectedItemPosition]
+    private fun selectedOrientation(): Int {
+        val text = binding.spinnerOrientation.text?.toString().orEmpty()
+        return orientationSelection.firstOrNull { it.second == text } ?: orientationSelection.first()
+    }
 
     // endregion
 
@@ -311,7 +317,7 @@ class BuilderImageAdapter(
 
     override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): VH {
         val binding = com.freepdf.manager.databinding.ItemBuilderImageBinding.inflate(
-            androidx.LayoutInflater.from(parent.context), parent, false
+            android.view.LayoutInflater.from(parent.context), parent, false
         )
         return VH(binding)
     }

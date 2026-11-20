@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorAction
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,6 +18,7 @@ import com.freepdf.manager.core.humanSize
 import com.freepdf.manager.databinding.FragmentFilesBinding
 import com.freepdf.manager.db.FileEntity
 import com.freepdf.manager.ui.reader.ReaderActivity
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
@@ -53,14 +54,17 @@ class FilesFragment : Fragment() {
             adapter = adapter
         }
 
-        binding.filesTabs.addOnTabSelectedListener(
-            com.google.android.material.tabs.TabLayout.OnTabSelectedListener { tab, _ ->
+        binding.filesTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
                 viewModel.setTab(tab.position)
             }
-        )
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
 
         binding.searchInput.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorAction.IME_ACTION_SEARCH) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 runSearch(binding.searchInput.text?.toString().orEmpty())
                 true
             } else false

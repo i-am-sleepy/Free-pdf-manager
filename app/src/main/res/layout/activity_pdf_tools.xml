@@ -97,20 +97,20 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <com.google.android.material.radiotext.MaterialRadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb90"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="90°" />
 
-                <com.google.android.material.radiotext.MaterialRadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb180"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="180°" />
 
-                <com.google.android.material.radiotext.MaterialRadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb270"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,20 +126,20 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <com.google.android.material.radiotext.MaterialRadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rbLow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="@string/compress_low" />
 
-                <com.google.android.material.radiotext.MaterialRadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rbMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/compress_medium" />
 
-                <com.google.android.material.radiotext.MaterialRadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rbMax"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -24,9 +24,11 @@ class FilesViewModel @Inject constructor(
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    const val TAB_RECENT = 0
-    const val TAB_FAVORITES = 1
-    const val TAB_BIN = 2
+    companion object {
+        const val TAB_RECENT = 0
+        const val TAB_FAVORITES = 1
+        const val TAB_BIN = 2
+    }
 
     private val _tab = MutableStateFlow(TAB_RECENT)
     val tab: StateFlow<Int> = _tab
@@ -44,12 +46,12 @@ class FilesViewModel @Inject constructor(
      */
     val files: StateFlow<List<FileEntity>> =
         kotlinx.coroutines.flow.combine(
-            _tab, recentFlow, favoritesFlow, binFlow
-        ) { tab, recent, fav, bin ->
-            when (tab) {
-                TAB_FAVORITES -> fav
-                TAB_BIN -> bin
-                else -> recent
+            listOf(_tab, recentFlow, favoritesFlow, binFlow)
+        ) { values ->
+            when (values[0]) {
+                TAB_FAVORITES -> values[2]
+                TAB_BIN -> values[3]
+                else -> values[1]
             }
         }.stateIn(scope, SharingStarted.Eagerly, emptyList())
 

@@ -12,8 +12,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.freepdf.manager.R
@@ -191,10 +191,10 @@ class EditActivity : AppCompatActivity() {
         val h = src.height.toFloat()
         val rect = if (w / h > ratio) {
             val newW = h * ratio
-            Rect((w - newW) / 2, 0, ((w + newW) / 2).toInt(), h.toInt())
+            Rect(((w - newW) / 2).toInt(), 0, ((w + newW) / 2).toInt(), h.toInt())
         } else {
             val newH = w / ratio
-            Rect(0, (h - newH) / 2, w.toInt(), ((h + newH) / 2).toInt())
+            Rect(0, ((h - newH) / 2).toInt(), w.toInt(), ((h + newH) / 2).toInt())
         }
         lifecycleScope.launch {
             showProgress(true)

@@ -33,8 +33,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileOutputStream
 import java.util.zip.ZipEntry
-import java.util.zip.ZipFile
+import java.util.zip.ZipOutputStream
 
 /**
  * PDF Tools — one screen, many tools. [EXTRA_TOOL] (a string id from
@@ -212,7 +213,7 @@ class PdfToolsActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, wm.map { it.second })
         )
         binding.spinnerWmPos.setText(wm[0].second, false)
-        wmPos = wm.map { it.first }
+        wmPos = wm
 
         val pn = listOf(
             Constants.PageNumber.BOTTOM_LEFT to getString(R.string.pnp_bottom_left),
@@ -226,14 +227,21 @@ class PdfToolsActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, pn.map { it.second })
         )
         binding.spinnerPnPos.setText(pn[2].second, false)
-        pnPos = pn.map { it.first }
+        pnPos = pn
     }
 
-    private var wmPos = listOf(Constants.Watermark.CENTER)
-    private var pnPos = listOf(Constants.PageNumber.BOTTOM_RIGHT)
+    private var wmPos = listOf(Constants.Watermark.CENTER to Constants.Watermark.CENTER)
+    private var pnPos = listOf(Constants.PageNumber.BOTTOM_RIGHT to Constants.PageNumber.BOTTOM_RIGHT)
 
-    private fun selectedWmPos(): String = wmPos[binding.spinnerWmPos.selectedItemPosition]
-    private fun selectedPnPos(): String = pnPos[binding.spinnerPnPos.selectedItemPosition]
+    private fun selectedWmPos(): String {
+        val text = binding.spinnerWmPos.text?.toString().orEmpty()
+        return wmPos.firstOrNull { it.second == text }?.first ?: Constants.Watermark.CENTER
+    }
+
+    private fun selectedPnPos(): String {
+        val text = binding.spinnerPnPos.text?.toString().orEmpty()
+        return pnPos.firstOrNull { it.second == text }?.first ?: Constants.PageNumber.BOTTOM_RIGHT
+    }
 
     // endregion
 
@@ -415,10 +423,10 @@ class PdfToolsActivity : AppCompatActivity() {
                         }
                     }
                     val zip = File(dir, "$base.zip")
-                    ZipFile(zip).use { z ->
+                    ZipOutputStream(FileOutputStream(zip)).use { z ->
                         for (f in outDir.listFiles().orEmpty()) {
                             z.putNextEntry(ZipEntry(f.name))
-                            f.inputStream().use { z.copyFrom(it) }
+                            f.inputStream().use { it.copyTo(z) }
                             z.closeEntry()
                         }
                     }
@@ -546,8 +554,8 @@ class PdfToolsActivity : AppCompatActivity() {
                     oldPageRanges: PageRange?,
                     newAttributes: PrintAttributes,
                     newPageRanges: PageRange?,
-                    cancelCallback: android.print.Cancellable,
-                    resultCallback: OnLayoutResultCallback
+                    cancelCallback: PrintDocumentAdapter.Cancellable,
+                    resultCallback: PrintDocumentAdapter.OnLayoutResultCallback
                 ) {
                     resultCallback.onLayoutFinished(
                         PrintDocumentInfo.Builder(src.name)
@@ -558,10 +566,10 @@ class PdfToolsActivity : AppCompatActivity() {
                 override fun onRender(
                     pages: Array<out String>,
                     attrs: PrintAttributes,
-                    cancelCallback: android.print.Cancellable,
-                    resultCallback: OnRenderResultCallback
+                    cancelCallback: PrintDocumentAdapter.Cancellable,
+                    resultCallback: PrintDocumentAdapter.OnRenderResultCallback
                 ) {
-                    doc.writeTo(resultCallback.writePdfContentStream)
+                    doc.writeTo(android.os.ParcelFileDescriptor.AutoCloseOutputStream(resultCallback.writePdfContentStream))
                     doc.close()
                     resultCallback.onRenderFinished(pages)
                 }

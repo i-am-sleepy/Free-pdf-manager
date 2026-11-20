@@ -303,7 +303,7 @@ class PageAdapter(private val activity: ReaderActivity) :
 
     override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): VH {
         val binding = com.freepdf.manager.databinding.ItemReaderPageBinding.inflate(
-            androidx.LayoutInflater.from(parent.context), parent, false
+            android.view.LayoutInflater.from(parent.context), parent, false
         )
         return VH(binding)
     }

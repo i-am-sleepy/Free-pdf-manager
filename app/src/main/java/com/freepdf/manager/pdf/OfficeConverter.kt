@@ -82,13 +82,12 @@ object OfficeConverter {
                 }
             }
             // recurse into groups
-            try {
-                val sub = shape.shapes
+            val group = shape as? XSLFGroupShape
+            if (group != null) {
+                val sub = group.shapes
                 if (sub.isNotEmpty()) {
                     collectShapeText(sub, sb, depth + 1)
                 }
-            } catch (e: Exception) {
-                // not a container
             }
         }
     }
@@ -104,7 +103,7 @@ object OfficeConverter {
                 val sheet: XSSFSheet = wb.getSheetAt(i)
                 sb.append("Sheet: ${sheet.sheetName}\n")
                 for (r in sheet.firstRowNum..sheet.lastRowNum) {
-                    val row: XSSFRow? = sheet.getRow(r) ?: continue
+                    val row: XSSFRow = sheet.getRow(r) ?: continue
                     val cells = mutableListOf<String>()
                     for (c in 0..(row.lastCellNum.toInt() - 1)) {
                         val cell = row.getCell(c)

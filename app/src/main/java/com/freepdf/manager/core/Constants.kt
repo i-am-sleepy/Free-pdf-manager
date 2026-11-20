@@ -16,7 +16,7 @@ object Constants {
     /** File name used for newly generated files, with the date stamp. */
     fun defaultFileName(prefix: String = "Document"): String {
         val stamp = SimpleDateFormat("yyyyMMdd_HHmm", Locale.US).format(Date())
-        return "$prefix_$stamp.pdf"
+        return "${prefix}_$stamp.pdf"
     }
 
     /** Page sizes as width x height in PDF points (1 pt = 1/72 inch). */

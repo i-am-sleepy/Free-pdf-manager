@@ -248,7 +248,7 @@ class ScanPageAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ScanPa
         viewType: Int
     ): VH {
         val binding = com.freepdf.manager.databinding.ItemScanPageBinding.inflate(
-            androidx.LayoutInflater.from(parent.context), parent, false
+            android.view.LayoutInflater.from(parent.context), parent, false
         )
         return VH(binding)
     }

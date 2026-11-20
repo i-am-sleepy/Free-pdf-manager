@@ -11,6 +11,7 @@ import com.tom_roush.pdfbox.pdmodel.encryption.StandardProtectionPolicy
 import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
 import com.tom_roush.pdfbox.pdmodel.graphics.image.JPEGFactory
 import com.tom_roush.pdfbox.pdmodel.graphics.image.PDImageXObject
+import com.tom_roush.pdfbox.pdmodel.interactive.documentnavigation.destination.PDDestination
 import com.tom_roush.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline
 import com.tom_roush.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem
 import com.tom_roush.pdfbox.rendering.PDFRenderer
@@ -406,7 +407,7 @@ object PdfEngine {
                 if (i < doc.numberOfPages) {
                     val item = PDOutlineItem()
                     item.title = titles[i]
-                    item.destination = doc.getPage(i)
+                    item.destination = PDDestination(doc.getPage(i))
                     outline.addLast(item)
                 }
             }

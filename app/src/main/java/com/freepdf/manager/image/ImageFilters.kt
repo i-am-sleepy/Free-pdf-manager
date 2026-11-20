@@ -2,6 +2,7 @@ package com.freepdf.manager.image
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
@@ -170,7 +171,7 @@ object ImageFilters {
                 }
                 val p = pixels
                 for (ch in 0..3) {
-                    fun comp(idx: Int): Float = (p[idx] ushr (ch * 8)) and 0xFF
+                    fun comp(idx: Int): Float = ((p[idx] ushr (ch * 8)) and 0xFF).toFloat()
                     val v = c * comp(i) +
                         s * (comp(i - 1) + comp(i + 1) + comp(i - w) + comp(i + w))
                     result[i] = result[i] or (v.roundToInt().coerceIn(0, 255) shl (ch * 8))
