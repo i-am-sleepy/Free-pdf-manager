@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/reader_zoom_out"
-            android:icon="@drawable/ic_zoom_out" />
+            app:icon="@drawable/ic_zoom_out" />
 
         <TextView
             android:id="@+id/tvPage"
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/reader_zoom_in"
-            android:icon="@drawable/ic_zoom_in" />
+            app:icon="@drawable/ic_zoom_in" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnToc"
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/reader_toc"
-            android:icon="@drawable/ic_toc" />
+            app:icon="@drawable/ic_toc" />
     </LinearLayout>
 
     <com.google.android.material.progressindicator.CircularProgressIndicator

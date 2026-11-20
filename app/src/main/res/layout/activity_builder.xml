@@ -141,7 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:icon="@drawable/ic_image_to_pdf"
+                app:icon="@drawable/ic_image_to_pdf"
                 android:text="@string/add_images"
                 android:visibility="gone" />
         </LinearLayout>
@@ -152,7 +152,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:icon="@drawable/ic_save"
+        app:icon="@drawable/ic_save"
         android:text="@string/build_pdf"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
