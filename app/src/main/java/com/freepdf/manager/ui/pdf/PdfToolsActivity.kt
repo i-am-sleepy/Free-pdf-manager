@@ -256,12 +256,12 @@ class PdfToolsActivity : AppCompatActivity() {
             "split", "extract_pages" -> {
                 if (src == null) return
                 val pages = pagesFromInput() ?: return
-                runEngine { PdfEngine.extractPages(src, out(), pages) }
+                runEngine { out -> PdfEngine.extractPages(src, out, pages) }
             }
             "delete_pages" -> {
                 if (src == null) return
                 val pages = pagesFromInput() ?: return
-                runEngine { PdfEngine.deletePages(src, out(), pages.toSet()) }
+                runEngine { out -> PdfEngine.deletePages(src, out, pages.toSet()) }
             }
             "rotate" -> {
                 if (src == null) return
@@ -271,7 +271,7 @@ class PdfToolsActivity : AppCompatActivity() {
                     R.id.rb270 -> 270
                     else -> 90
                 }
-                runEngine { PdfEngine.rotatePages(src, out(), pages, deg) }
+                runEngine { out -> PdfEngine.rotatePages(src, out, pages, deg) }
             }
             "compress" -> {
                 if (src == null) return
@@ -280,7 +280,7 @@ class PdfToolsActivity : AppCompatActivity() {
                     R.id.rbMax -> 300 to 0.95f
                     else -> 72 to 0.6f
                 }
-                runEngine { PdfEngine.compress(src, out(), dpi, quality) }
+                runEngine { out -> PdfEngine.compress(src, out, dpi, quality) }
             }
             "watermark" -> {
                 if (src == null) return
@@ -288,22 +288,24 @@ class PdfToolsActivity : AppCompatActivity() {
                 if (text.isBlank()) {
                     toast(R.string.error_generic); return
                 }
-                runEngine { PdfEngine.addWatermark(src, out(), text, 48f, 0.5f, selectedWmPos()) }
+                runEngine { out ->
+                    PdfEngine.addWatermark(src, out, text, 48f, 0.5f, selectedWmPos())
+                }
             }
             "page_numbers" -> {
                 if (src == null) return
-                runEngine { PdfEngine.addPageNumbers(src, out(), selectedPnPos(), 12f, 1) }
+                runEngine { out -> PdfEngine.addPageNumbers(src, out, selectedPnPos(), 12f, 1) }
             }
             "lock" -> {
                 if (src == null) return
                 val pw = binding.etPassword.text?.toString().orEmpty()
                 if (pw.isEmpty()) { toast(R.string.error_password); return }
-                runEngine { PdfEngine.lock(src, out(), pw) }
+                runEngine { out -> PdfEngine.lock(src, out, pw) }
             }
             "unlock" -> {
                 if (src == null) return
                 val pw = binding.etPassword.text?.toString().orEmpty()
-                runEngine { PdfEngine.unlock(src, out(), pw) }
+                runEngine { out -> PdfEngine.unlock(src, out, pw) }
             }
             "pdf_to_image" -> {
                 if (src == null) return
@@ -339,7 +341,7 @@ class PdfToolsActivity : AppCompatActivity() {
         if (mergeFiles.size < 2) {
             toast(R.string.error_generic); return
         }
-        runEngine { PdfEngine.merge(mergeFiles, out()) }
+        runEngine { out -> PdfEngine.merge(mergeFiles, out) }
     }
 
     /** Runs a blocking PdfEngine call on IO and shares the result. */
@@ -469,9 +471,9 @@ class PdfToolsActivity : AppCompatActivity() {
                             val bmp = PdfEngine.renderPage(doc, i, 2.0f)
                             val image = InputImage.fromBitmap(bmp, 0)
                             val t = recognizer.process(image).getResult(ApiException::class.java)
-                            if (t.isNotBlank()) {
+                            if (t.text.isNotBlank()) {
                                 sb.append("Page ${i + 1}\n")
-                                sb.append(t).append("\n\n")
+                                sb.append(t.text).append("\n\n")
                             }
                             bmp.recycle()
                         }
@@ -533,7 +535,7 @@ class PdfToolsActivity : AppCompatActivity() {
     private fun printPdf(src: File) {
         try {
             val doc = PdfDocument()
-            PDDocument.load(src).use { pdf ->
+            val pageCount = PDDocument.load(src).use { pdf ->
                 for (i in 0 until pdf.numberOfPages) {
                     val page = pdf.getPage(i)
                     val w = page.mediaBox.width.toInt()
@@ -547,9 +549,8 @@ class PdfToolsActivity : AppCompatActivity() {
                     bmp.recycle()
                     doc.finishPage(pdfPage)
                 }
+                pdf.numberOfPages
             }
-
-            val pageCount = doc.getPageCount()
             val adapter = object : PrintDocumentAdapter() {
                 override fun onLayout(
                     oldAttributes: PrintAttributes?,
