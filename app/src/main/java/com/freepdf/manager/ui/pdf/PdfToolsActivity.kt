@@ -549,7 +549,7 @@ class PdfToolsActivity : AppCompatActivity() {
                 }
             }
 
-            val pageCount = doc.pageCount
+            val pageCount = doc.getPageCount()
             val adapter = object : PrintDocumentAdapter() {
                 override fun onLayout(
                     oldAttributes: PrintAttributes?,
