@@ -14,12 +14,8 @@
         <item name="colorError">@color/fpm_error</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">?attr/actionBarThemeLight</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/fpm_surface</item>
-    </style>
-
-    <style name="Theme.FreePDFManager.ActionBarLight" parent="ThemeOverlay.Material3.Light">
-        <item name="actionBarThemeLight">true</item>
     </style>
 
     <style name="Theme.FreePDFManager.Fullscreen" parent="Theme.FreePDFManager">
