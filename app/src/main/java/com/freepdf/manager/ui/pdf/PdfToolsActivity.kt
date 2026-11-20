@@ -10,7 +10,7 @@ import android.print.PrintDocumentAdapter
 import android.print.PrintDocumentInfo
 import android.print.PrintManager
 import android.util.Log
-import com.google.android.gms.tasks.ApiException
+import com.google.android.gms.common.api.ApiException
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -28,7 +28,7 @@ import com.freepdf.manager.pdf.PdfEngine
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
-import com.google.mlkit.vision.text.TextRecognizerOptions
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
