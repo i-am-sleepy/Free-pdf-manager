@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.freepdf.manager.ui.home.HomeFragment"
+        android:label="@string/nav_home"
+        tools:layout="@layout/fragment_home"
+        xmlns:tools="http://schemas.android.com/tools" />
+
+    <fragment
+        android:id="@+id/toolsFragment"
+        android:name="com.freepdf.manager.ui.tools.ToolsFragment"
+        android:label="@string/nav_tools"
+        tools:layout="@layout/fragment_tools"
+        xmlns:tools="http://schemas.android.com/tools" />
+
+    <fragment
+        android:id="@+id/filesFragment"
+        android:name="com.freepdf.manager.ui.files.FilesFragment"
+        android:label="@string/nav_files"
+        tools:layout="@layout/fragment_files"
+        xmlns:tools="http://schemas.android.com/tools" />
+
+</navigation>

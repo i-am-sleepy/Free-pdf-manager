@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ============ Free PDF Manager — Theme (Material 3) ============ -->
+    <style name="Theme.FreePDFManager" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/fpm_primary</item>
+        <item name="colorOnPrimary">@color/fpm_on_primary</item>
+        <item name="colorPrimaryContainer">@color/fpm_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/fpm_on_primary_container</item>
+        <item name="colorSecondary">@color/fpm_secondary</item>
+        <item name="colorOnSecondary">@color/fpm_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/fpm_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/fpm_on_secondary_container</item>
+        <item name="colorTertiary">@color/fpm_tertiary</item>
+        <item name="colorError">@color/fpm_error</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/actionBarThemeLight</item>
+        <item name="android:windowBackground">@color/fpm_surface</item>
+    </style>
+
+    <style name="Theme.FreePDFManager.ActionBarLight" parent="ThemeOverlay.Material3.Light">
+        <item name="actionBarThemeLight">true</item>
+    </style>
+
+    <style name="Theme.FreePDFManager.Fullscreen" parent="Theme.FreePDFManager">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- Bottom sheet for tool dialogs -->
+    <style name="Theme.FreePDFManager.BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.FreePDFManager.BottomSheet</item>
+    </style>
+
+    <style name="Widget.FreePDFManager.BottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="backgroundTint">@color/fpm_surface</item>
+    </style>
+
+    <!-- Tool grid item -->
+    <style name="ToolItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="ToolItem.Icon">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="ToolItem.Title">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!-- Quick action cards (Home) -->
+    <style name="QuickActionCard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="rippleColor">?attr/colorControlHighlight</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="QuickActionContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="QuickActionTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="QuickActionDesc">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+</resources>

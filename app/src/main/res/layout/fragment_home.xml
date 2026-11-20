@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="100% free · 100% offline"
+            android:textSize="13sp"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+        <!-- Quick actions: rows of 2 cards -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/action_create_pdf"
+                    style="@style/QuickActionCard"
+                    app:cardBackgroundColor="?attr/colorPrimaryContainer">
+
+                    <LinearLayout style="@style/QuickActionContent">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_create_pdf"
+                            app:tint="?attr/colorPrimary" />
+                        <TextView
+                            style="@style/QuickActionTitle"
+                            android:text="@string/home_create_pdf" />
+                        <TextView
+                            style="@style/QuickActionDesc"
+                            android:text="@string/home_create_pdf_desc" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/action_scan"
+                    style="@style/QuickActionCard">
+
+                    <LinearLayout style="@style/QuickActionContent">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_scan" />
+                        <TextView
+                            style="@style/QuickActionTitle"
+                            android:text="@string/home_scan" />
+                        <TextView
+                            style="@style/QuickActionDesc"
+                            android:text="@string/home_scan_desc" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/action_edit"
+                    style="@style/QuickActionCard">
+
+                    <LinearLayout style="@style/QuickActionContent">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_edit_image" />
+                        <TextView
+                            style="@style/QuickActionTitle"
+                            android:text="@string/home_edit_image" />
+                        <TextView
+                            style="@style/QuickActionDesc"
+                            android:text="@string/home_edit_image_desc" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/action_pdf_tools"
+                    style="@style/QuickActionCard">
+
+                    <LinearLayout style="@style/QuickActionContent">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_tools" />
+                        <TextView
+                            style="@style/QuickActionTitle"
+                            android:text="@string/home_pdf_tools" />
+                        <TextView
+                            style="@style/QuickActionDesc"
+                            android:text="@string/home_pdf_tools_desc" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/action_reader"
+                    style="@style/QuickActionCard">
+
+                    <LinearLayout style="@style/QuickActionContent">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_reader" />
+                        <TextView
+                            style="@style/QuickActionTitle"
+                            android:text="@string/home_reader" />
+                        <TextView
+                            style="@style/QuickActionDesc"
+                            android:text="@string/home_reader_desc" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/action_text_to_pdf"
+                    style="@style/QuickActionCard">
+
+                    <LinearLayout style="@style/QuickActionContent">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_text_to_pdf" />
+                        <TextView
+                            style="@style/QuickActionTitle"
+                            android:text="@string/home_text_to_pdf" />
+                        <TextView
+                            style="@style/QuickActionDesc"
+                            android:text="@string/home_text_to_pdf_desc" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/recent_files"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recent_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false" />
+
+        <TextView
+            android:id="@+id/recent_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:padding="32dp"
+            android:text="@string/files_empty_hint"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fpm_primary">#8AC6FF</color>
+    <color name="fpm_on_primary">#00325A</color>
+    <color name="fpm_primary_container">#004472</color>
+    <color name="fpm_on_primary_container">#CDE7FF</color>
+    <color name="fpm_secondary">#78D8D2</color>
+    <color name="fpm_on_secondary">#003733</color>
+    <color name="fpm_secondary_container">#004F4C</color>
+    <color name="fpm_on_secondary_container">#C4F2EF</color>
+    <color name="fpm_tertiary">#F2BE55</color>
+    <color name="fpm_error">#FFB4AB</color>
+    <color name="fpm_surface">#1A1C1E</color>
+    <color name="fpm_background">#121212</color>
+    <color name="fpm_surface_variant">#44474E</color>
+    <color name="fpm_on_surface">#E3E2E6</color>
+    <color name="fpm_on_surface_variant">#C4C6D0</color>
+    <color name="fpm_outline">#8E9099</color>
+</resources>

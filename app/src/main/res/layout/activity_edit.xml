@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fpm_background">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/fpm_surface"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_close"
+        app:title="@string/edit_title" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        android:background="@color/fpm_surface"
+        app:layout_constraintBottom_toTopOf="@id/bottomToolBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomToolBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/fpm_surface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCrop"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:icon="@drawable/ic_crop"
+                android:text="@string/edit_crop"
+                android:iconGravity="top"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAdjust"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:icon="@drawable/ic_adjust"
+                android:text="@string/edit_adjust"
+                android:iconGravity="top"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFilters"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:icon="@drawable/ic_filter"
+                android:text="@string/edit_filters"
+                android:iconGravity="top"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDoodle"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:icon="@drawable/ic_brush"
+                android:text="@string/edit_doodle"
+                android:iconGravity="top"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnText"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:icon="@drawable/ic_text"
+                android:text="@string/edit_text"
+                android:iconGravity="top"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignature"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:icon="@drawable/ic_signature"
+                android:text="@string/edit_signature"
+                android:iconGravity="top"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+        </LinearLayout>
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <!-- Tool panels (initially hidden) -->
+    <LinearLayout
+        android:id="@+id/panelCrop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/fpm_surface"
+        android:visibility="gone"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomToolBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_crop"
+            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="8dp" />
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCropPresets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApplyCrop"
+            style="@style/Widget.Material3.Button.FilledButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/apply" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/panelAdjust"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/fpm_surface"
+        android:visibility="gone"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomToolBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/brightness"
+            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+        
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderBrightness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="-100"
+            android:valueTo="100"
+            android:value="0"
+            android:stepSize="1" />
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contrast"
+            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginTop="16dp" />
+        
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderContrast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="-100"
+            android:valueTo="100"
+            android:value="0"
+            android:stepSize="1" />
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/saturation"
+            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginTop="16dp" />
+        
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderSaturation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="-100"
+            android:valueTo="100"
+            android:value="0"
+            android:stepSize="1" />
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApplyAdjust"
+            style="@style/Widget.Material3.Button.FilledButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/apply" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFilters"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:padding="16dp"
+        android:background="@color/fpm_surface"
+        app:layout_constraintBottom_toTopOf="@id/bottomToolBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:indicatorSize="48dp" />
+
+    <!-- Doodle panel -->
+    <LinearLayout
+        android:id="@+id/panelDoodle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/fpm_surface"
+        android:visibility="gone"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomToolBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.freepdf.manager.ui.edit.DrawingView
+            android:id="@+id/doodleView"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="?attr/colorSurfaceVariant" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDoodleUndo"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_doodle_undo" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDoodleRedo"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_doodle_redo" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDoodleEraser"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_doodle_eraser" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDoodleApply"
+                style="@style/Widget.Material3.Button.FilledButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/apply" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Text panel -->
+    <LinearLayout
+        android:id="@+id/panelText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/fpm_surface"
+        android:visibility="gone"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomToolBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_text_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_text_size"
+            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginTop="12dp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderTextSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="12"
+            android:valueTo="72"
+            android:value="24"
+            android:stepSize="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApplyText"
+            style="@style/Widget.Material3.Button.FilledButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/apply" />
+    </LinearLayout>
+
+    <!-- Signature panel -->
+    <LinearLayout
+        android:id="@+id/panelSignature"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/fpm_surface"
+        android:visibility="gone"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomToolBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_signature_hint"
+            android:textSize="13sp"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+        <com.freepdf.manager.ui.edit.DrawingView
+            android:id="@+id/signatureView"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="?attr/colorSurfaceVariant"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignatureClear"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_signature_clear" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignatureApply"
+                style="@style/Widget.Material3.Button.FilledButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/apply" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
